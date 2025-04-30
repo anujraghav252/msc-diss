@@ -1,3 +1,33 @@
+/*
+ * Electron_Cut_Flow.C
+ *
+ * Description:
+ * This ROOT macro performs a cut flow analysis on the DYtoLL_M50 Monte Carlo sample.
+ * It selects events with exactly two tightly identified electrons and applies a series 
+ * of kinematic and physics-based cuts to evaluate the number of events passing each stage.
+ * The purpose is to study event selection efficiency and optimize cuts for signal purity.
+ *
+ * Cut Flow Stages:
+ *  1. Exactly two tight electrons with opposite charge.
+ *  2. Leading electron pt > 25 GeV, subleading pt > 20 GeV, both |η| < 2.5.
+ *  3. Invariant mass of electron pair (m_ll) between 60 and 120 GeV.
+ *  4. Projected MET < 20 GeV.
+ *  5. Transverse momentum of dilepton system (pt_ll) < 40 GeV.
+ *  6. Azimuthal angle difference (Δφ_ll) > 2.5.
+ *
+ * Input:
+ *   - DYtoLL_M50.root (ROOT file containing a TTree named "Events")
+ *
+ * Output:
+ *   - Printed cut flow summary showing the number of events surviving each cut stage.
+ *
+ * Author: Anuj Raghav
+ * Date: 15-April-2025
+ */
+
+
+
+
 #include <TFile.h>
 #include <TTree.h>
 #include <TCanvas.h>
@@ -113,7 +143,6 @@ cout << "Events after projected MET < 20 GeV: " << eventAfterstage4 << endl;
 cout << "Events after pₜ^ll < 40 GeV: " << eventAfterstage5 << endl;
 cout << "Events after |Δφ_ll| > 2.5: " << eventAfterstage6 << endl;
 cout << "\nFinal events passing all cuts: " << eventAfterstage6 << endl;
-cout << "Efficiency: " << (100.0 * eventAfterstage6) / eventAfterstage1 << " %" << endl;
 cout << "\n\n";
 
 
