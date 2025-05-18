@@ -64,8 +64,101 @@ If the installation was successful, you should see the following output: `root [
 This message confirms that ROOT is successfully installed and ready for use in analysis.
 
 
+## Repository Contents
+
+This repository contains ROOT macros (`.C` files) developed for the analysis of the Drell–Yan (DY) process in the CMS experiment:
+
+### 1. `Electron_Cut_Flow.C`
+
+- Performs a cut flow analysis on the DYtoLL_M50 Monte Carlo sample.
+- Selects events with exactly two tightly identified electrons.
+- Applies sequential kinematic and physics cuts:
+  1. Exactly two tight electrons with opposite charge.
+  2. Leading electron $p_T > 25\,\text{GeV}$, subleading $p_T > 20\,\text{GeV}$, both with $|\eta| < 2.5$.
+  3. Invariant mass of electron pair between 60 and 120 GeV.
+  4. Projected MET less than 20 GeV.
+  5. Dilepton transverse momentum $p_T^{\ell\ell} < 40\,\text{GeV}$.
+  6. Azimuthal angle difference $\Delta\phi_{\ell\ell} > 2.5$.
+- Outputs the number of events surviving each cut stage.
+
+---
+
+### 2. `branch_extractor.C`
+
+- Extracts a subset of branches from multiple ROOT files (`DYtoLL1.root` to `DYtoLL61.root`) containing CMS Open Data or Monte Carlo events.
+- Disables all branches by default, selectively enables relevant physics branches.
+- Creates a slimmed ROOT file (`DYtoLL_ext1.root`) with only needed variables.
+- Optimizes memory and speeds up subsequent analyses.
+
+---
+
+### 3. `branch_type.C`
+
+- Inspects the data types of specified branches in a ROOT file (default `DYtoLL1.root`).
+- Checks for branch existence and prints their types.
+- Useful for verifying data formats and debugging.
+
+---
+
+### 4. `projected_MET.C`
+
+- Calculates projected Missing Transverse Energy (MET) and related angular variables for events in `WWTo2L2Nu.root`.
+- Identifies leading and subleading electrons, computes delta phi angles between MET and electrons.
+- Calculates projected MET based on these angles.
+- Adds new branches to the tree: `delta_phi_1`, `delta_phi_2`, `delta_phi_min`, and `projected_MET`.
+- Saves updated tree back into the ROOT file.
+- Aids in signal-background separation in multilepton analyses.
+
+---
+
+Each macro is designed to be run using ROOT and contributes to improving the signal purity and background suppression in the Drell–Yan process analysis.
+
+
+## Running a Macro in ROOT
+
+You can run any `.C` macro interactively or in batch mode.
+
+#### 1. Interactive Mode
+
+Start ROOT in your terminal:
+
+`
+root 
+.L Electron_Cut_Flow.C
+Electron_Cut_Flow() `
+
+#### 2. Batch Mode
+Run a macro without opening the ROOT prompt:
+
+`root -l -b -q Electron_Cut_Flow.C`
+
+`-l` : Do not show the ROOT splash screen.
+
+`-b` : Batch mode (no graphics).
+
+`-q` : Exit ROOT after running the macro.
 
 
 
 
+## Acknowledgments
 
+This project was carried out as part of the final year undergraduate dissertation at [Department of Physics and Astrophysics, University of Delhi].  
+I would like to express my sincere gratitude to:
+
+- **[Dr. Arun Kumar](https://github.com/arunhep)** – for their continuous guidance and support.
+- **The CMS Collaboration** – for making Open Data publicly accessible.
+- **CERN** – for the ROOT framework and extensive documentation.
+
+This work uses simulated datasets and tools provided under the [CMS Open Data initiative](https://cms-opendata.web.cern.ch/).
+
+---
+
+##  Contact
+
+If you have questions, suggestions, or would like to collaborate, feel free to reach out:
+
+- 📧 Email: anujraghav.physics@gmail.com
+- 🧑‍💻 GitHub: [anujraghav252](https://github.com/anujraghav252)
+
+---
