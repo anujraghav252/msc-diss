@@ -111,6 +111,17 @@ This repository contains ROOT macros (`.C` files) developed for the analysis of 
 
 ---
 
+### 5. `Superimposed_plots.C`
+#
+-  This ROOT macro (`superimposed_plots.C`) processes multiple CMS Open Data Monte Carlo samples to overlay **normalized kinematic distributions** of electron pairs (e.g., from Drell-Yan, tt̄, VV backgrounds).
+-  Applies **tight electron selection** (`mvaFall17V2Iso_WP90`) and requires **exactly two opposite-charge electrons** to reconstruct dilepton quantities.
+-  Plots distributions of `m_{ll}`, `p_T^{ll}`, projected MET, `Δϕ_{ll}`, and leading/subleading electron `p_T` and `η`, comparing across samples.
+-  Saves each overlaid distribution as a `.png` file, labeled and styled for presentation.
+
+
+
+---
+
 Each macro is designed to be run using ROOT and contributes to improving the signal purity and background suppression in the Drell–Yan process analysis.
 
 
