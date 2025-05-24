@@ -20,15 +20,15 @@ void processTree(TTree* tree, TH1F* hist_mll, TH1F* hist_ptll, TH1F* hist_met, T
     tree->SetBranchAddress("nElectron", &nElectron);
     tree->SetBranchAddress("Electron_pt", Electron_pt);
     tree->SetBranchAddress("Electron_eta", Electron_eta);
- //   tree->SetBranchAddress("Electron_phi", Electron_phi);
+    tree->SetBranchAddress("Electron_phi", Electron_phi);
     tree->SetBranchAddress("Electron_pdgId", Electron_pdgId);
     tree->SetBranchAddress("Electron_mvaFall17V2Iso_WP90", Electron_mvaFall17V2Iso_WP90);
-  //  tree->SetBranchAddress("projected_MET", &projected_MET);
+    tree->SetBranchAddress("projected_MET", &projected_MET);
 
     int passedEvents = 0;
 
     Long64_t nEntries = tree->GetEntries();
-   for (Long64_t i = 0; i < 100000; i++) {
+   for (Long64_t i = 0; i < nEntries; i++) {
     tree->GetEntry(i);
 
     // Select tight electrons
@@ -60,16 +60,16 @@ void processTree(TTree* tree, TH1F* hist_mll, TH1F* hist_ptll, TH1F* hist_met, T
     double dphill = fabs(e1.DeltaPhi(e2));
 
     hist_mll->Fill(mll, scale);
-    // hist_ptll->Fill(ptll, scale);
-    // hist_met->Fill(projected_MET, scale);
-    // hist_dphill->Fill(dphill, scale);
+    hist_ptll->Fill(ptll, scale);
+    hist_met->Fill(projected_MET, scale);
+    hist_dphill->Fill(dphill, scale);
 
     // Determine leading/subleading by pT
     int lead = (Electron_pt[i1] > Electron_pt[i2]) ? i1 : i2;
     int sub  = (lead == i1) ? i2 : i1;
 
-    // hist_pt_lead->Fill(Electron_pt[lead], scale);
-    // hist_pt_sub->Fill(Electron_pt[sub], scale);
+    hist_pt_lead->Fill(Electron_pt[lead], scale);
+    hist_pt_sub->Fill(Electron_pt[sub], scale);
     hist_eta_lead->Fill(Electron_eta[lead], scale);
     hist_eta_sub->Fill(Electron_eta[sub], scale);
 }
@@ -138,18 +138,18 @@ void superimposed_plots() {
 
         
         
-     //   TH1F *h_mll     = new TH1F(Form("h_mll_%zu", i), "  ; m_{ll} [GeV]; Normalized Events", 30, 60, 120);
-       // TH1F *h_ptll    = new TH1F(Form("h_ptll_%zu", i), "  ; p_{T}^{ll} [GeV]; Normalized Events", 25, 0, 100);
-        //TH1F *h_met     = new TH1F(Form("h_met_%zu", i), "  ; Projected MET [GeV]; Normalized Events", 25, 0, 100);
-        //TH1F *h_dphill  = new TH1F(Form("h_dphill_%zu", i), "  ; #Delta#phi_{ll}; Normalized Events", 30, 0, 3.14);
+       TH1F *h_mll     = new TH1F(Form("h_mll_%zu", i), "  ; m_{ll} [GeV]; Normalized Events", 30, 60, 120);
+       TH1F *h_ptll    = new TH1F(Form("h_ptll_%zu", i), "  ; p_{T}^{ll} [GeV]; Normalized Events", 25, 0, 100);
+       TH1F *h_met     = new TH1F(Form("h_met_%zu", i), "  ; Projected MET [GeV]; Normalized Events", 25, 0, 100);
+       TH1F *h_dphill  = new TH1F(Form("h_dphill_%zu", i), "  ; #Delta#phi_{ll}; Normalized Events", 30, 0, 3.14);
 
 
         h_mll->SetLineColor(colors[i]);     h_mll->SetLineWidth(5);
-        // h_ptll->SetLineColor(colors[i]);    h_ptll->SetLineWidth(5);
-        // h_met->SetLineColor(colors[i]);     h_met->SetLineWidth(5);
-        // h_dphill->SetLineColor(colors[i]);  h_dphill->SetLineWidth(5);
-        // h_pt_lead->SetLineColor(colors[i]);  h_pt_lead->SetLineWidth(5);
-        // h_pt_sub->SetLineColor(colors[i]);   h_pt_sub->SetLineWidth(5);
+        h_ptll->SetLineColor(colors[i]);    h_ptll->SetLineWidth(5);
+        h_met->SetLineColor(colors[i]);     h_met->SetLineWidth(5);
+        h_dphill->SetLineColor(colors[i]);  h_dphill->SetLineWidth(5);
+        h_pt_lead->SetLineColor(colors[i]);  h_pt_lead->SetLineWidth(5);
+        h_pt_sub->SetLineColor(colors[i]);   h_pt_sub->SetLineWidth(5);
         h_eta_lead->SetLineColor(colors[i]); h_eta_lead->SetLineWidth(5);
         h_eta_sub->SetLineColor(colors[i]);  h_eta_sub->SetLineWidth(5);
 
@@ -158,20 +158,20 @@ void superimposed_plots() {
 
         // Normalize
         if (h_mll->Integral() > 0) h_mll->Scale(1.0 / h_mll->Integral());
-       // if (h_ptll->Integral() > 0) h_ptll->Scale(1.0 / h_ptll->Integral());
-        // if (h_met->Integral() > 0) h_met->Scale(1.0 / h_met->Integral());
-        // if (h_dphill->Integral() > 0) h_dphill->Scale(1.0 / h_dphill->Integral());
-        // if (h_pt_lead->Integral() > 0) h_pt_lead->Scale(1.0 / h_pt_lead->Integral());
-        // if (h_pt_sub->Integral() > 0) h_pt_sub->Scale(1.0 / h_pt_sub->Integral());
+        if (h_ptll->Integral() > 0) h_ptll->Scale(1.0 / h_ptll->Integral());
+        if (h_met->Integral() > 0) h_met->Scale(1.0 / h_met->Integral());
+        if (h_dphill->Integral() > 0) h_dphill->Scale(1.0 / h_dphill->Integral());
+        if (h_pt_lead->Integral() > 0) h_pt_lead->Scale(1.0 / h_pt_lead->Integral());
+        if (h_pt_sub->Integral() > 0) h_pt_sub->Scale(1.0 / h_pt_sub->Integral());
         if (h_eta_lead->Integral() > 0) h_eta_lead->Scale(1.0 / h_eta_lead->Integral());
         if (h_eta_sub->Integral() > 0) h_eta_sub->Scale(1.0 / h_eta_sub->Integral());
 
         h_mll_all.push_back(h_mll);
-       // h_ptll_all.push_back(h_ptll);
-       // h_met_all.push_back(h_met);
-       // h_dphill_all.push_back(h_dphill);
-       // h_pt_lead_all.push_back(h_pt_lead);
-      //  h_pt_sub_all.push_back(h_pt_sub);
+        h_ptll_all.push_back(h_ptll);
+        h_met_all.push_back(h_met);
+        h_dphill_all.push_back(h_dphill);
+        h_pt_lead_all.push_back(h_pt_lead);
+        h_pt_sub_all.push_back(h_pt_sub);
         h_eta_lead_all.push_back(h_eta_lead);
         h_eta_sub_all.push_back(h_eta_sub);
 
@@ -186,17 +186,14 @@ void superimposed_plots() {
     gPad->SetTopMargin(0.1);
     gPad->SetLeftMargin(0.1);
 
-    // Sort histograms by height (tallest drawn last)
-    std::sort(hists.begin(), hists.end(), [](TH1F* a, TH1F* b) {
-        return a->GetMaximum() < b->GetMaximum();
-    });
+  
 
     // Determine ymax
     float yMax = 1.0;
     if (filename.find("mll") != std::string::npos) {
         yMax = 0.25;
     } else if (filename.find("eta") != std::string::npos) {
-        yMax = 0.8;
+        yMax = 0.08;
     }
 
     // Set yMax for all histograms
@@ -229,11 +226,11 @@ void superimposed_plots() {
 
 
     drawOverlay(h_mll_all, "mll_overlay_random_events");
-   // drawOverlay(h_ptll_all, "ptll_overlay_random_events");
-   // drawOverlay(h_met_all, "met_overlay_random_events");
-   // drawOverlay(h_dphill_all, "dphill_overlay_random_events");
-   // drawOverlay(h_pt_lead_all, "pt_leading_electron");
-   // drawOverlay(h_pt_sub_all, "pt_subleading_electron");
+    drawOverlay(h_ptll_all, "ptll_overlay_random_events");
+    drawOverlay(h_met_all, "met_overlay_random_events");
+    drawOverlay(h_dphill_all, "dphill_overlay_random_events");
+    drawOverlay(h_pt_lead_all, "pt_leading_electron");
+    drawOverlay(h_pt_sub_all, "pt_subleading_electron");
     drawOverlay(h_eta_lead_all, "eta_leading_electron");
     drawOverlay(h_eta_sub_all, "eta_subleading_electron");
 }
