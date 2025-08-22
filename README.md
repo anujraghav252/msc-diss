@@ -169,7 +169,7 @@ This work uses simulated datasets and tools provided under the [CMS Open Data in
 
 If you have questions, suggestions, or would like to collaborate, feel free to reach out:
 
-- Email: anujraghav.physics@gmail.com[mailto:anujraghav.physics@gmail.com]
+- Email: anujraghav.physics@gmail.com
 - GitHub: [anujraghav252](https://github.com/anujraghav252)
 - LinkedIn: [Click here](www.linkedin.com/in/anuj-raghav252)
 
