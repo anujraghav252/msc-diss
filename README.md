@@ -171,6 +171,6 @@ If you have questions, suggestions, or would like to collaborate, feel free to r
 
 - Email: anujraghav.physics@gmail.com
 - GitHub: [anujraghav252](https://github.com/anujraghav252)
-- LinkedIn: [Click here](www.linkedin.com/in/anuj-raghav252)
+  
 
 ---
