@@ -1,6 +1,6 @@
 # Data Analysis of the Drell–Yan Process in the CMS Experiment at the LHC
 
-This repository contains the code developed for my final year dissertation project titled **"Data Analysis of the Drell–Yan Process in the CMS Experiment at the LHC"**.
+This repository contains the material developed for my master's thesis titled **"Data Analysis of the Drell–Yan Process in the CMS Experiment at the LHC"**.
 
 
 ## Project Overview
